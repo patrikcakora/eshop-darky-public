@@ -522,7 +522,7 @@
             let photosHtml = '';
             for (let i = 1; i <= p.img_count; i++) {
                 // Přidán mb-4 pro mezery mezi fotkami
-                photosHtml += '<img src="${getProductPath(p.code)}/${i}.jpg" class="w-full rounded-xl border border-accent-beige shadow-sm">';
+                photosHtml += `<img src="${getProductPath(p.code)}/${i}.jpg" class="w-full rounded-xl border border-accent-beige shadow-sm">`;
             }
 
             // Stačí jeden nápis nahoře. animate-bounce je pro scroll intuitivnější.
