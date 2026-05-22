@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z02B25SZYT"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Z02B25SZYT');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Čača Dárky | Osobní gravírované dárky</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                'wood-dark': '#3d2b1f',
+                'wood-light': '#fdfbf7',
+                'birch': '#f5e9da',
+                'chocolate': '#7B3F00',
+                'nature-green': '#2d4c3b',
+                'accent-beige': '#e6dcc8',
+                'olive': '#808000',
+                'coffee': '#6F4E37',
+              },
+              fontFamily: {
+                serif: ['Crimson Pro', 'serif'],
+                sans: ['Inter', 'sans-serif'],
+              }
+            }
+          }
+        }
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+    (function(){
+        emailjs.init("-XZkvxZdH6gL4Qzl9"); // ID z EmailJS
+    })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        .glass-header {
+            background: rgba(244, 244, 244, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(61, 43, 31, 0.1);
+            z-index: 50;
+        }
+        body { background-color: #f5e9da; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+    <link rel="icon" type="image/svg+xml" href="img_custom/icon.svg">
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- HLAVIČKA -->
+    <header class="glass-header sticky top-0 w-full py-3 px-6 flex justify-between items-center shadow-sm">
+        <a href="index.html" class="flex items-center gap-3 group decoration-transparent">
+            <div class="w-12 h-12 bg-nature-green text-white rounded-xl flex items-center justify-center shadow-md group-hover:bg-olive transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-handshake">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                    <path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.96c.82.82.85 2.13.07 3a2.82 2.82 0 0 1-3.79 0L15 13"/>
+                </svg>
+            </div>
+            <div class="flex flex-col leading-none">
+                <span class="text-xl font-bold text-nature-green uppercase tracking-tight">Čača</span>
+                <span class="text-xs uppercase tracking-widest text-coffee font-semibold mt-1">Dárky</span>
+            </div>
+        </a>
+        
+        <div class="flex items-center gap-4 md:gap-8">
+            <a href="podminky.html" class="hidden md:block text-wood-dark hover:text-nature-green transition text-sm font-semibold">Info</a>
+            <button onclick="toggleCart()" class="relative p-2.5 bg-nature-green text-white rounded-full hover:brightness-110 transition shadow-lg">
+                <span class="text-xl">🛒</span>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-chocolate text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-birch">0</span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- HERO SEKCE -->
+    <section class="relative h-[70vh] flex items-center justify-center text-center overflow-hidden">
+        <div class="absolute inset-0 bg-wood-dark/20 z-10"></div> <!-- Jemný ztmavující závoj -->
+        <img src="img_custom/hero.jpg" class="absolute inset-0 w-full h-full object-cover">
+        
+        <!-- Box: bg-white/5 je skoro neviditelný, backdrop-blur udělá to kouzlo -->
+        <div class="relative z-20 p-8 max-w-sm bg-white/50 backdrop-blur-lg rounded-3xl mx-4 border border-white/20 shadow-2xl">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-wood-dark drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+                Příběh vrytý do dřeva
+            </h2>
+            <p class="text-lg md:text-xl font-medium mb-8 text-wood-dark">
+                Originální dárky s duší. Od podtácků po truhly.
+            </p>
+            <a href="#produkty" class="bg-white text-wood-dark px-10 py-4 rounded-full font-bold text-lg hover:bg-accent-beige transition-all transform hover:scale-105 shadow-2xl inline-block uppercase tracking-wider">
+                Prozkoumat tvorbu
+            </a>
+        </div>
+    </section>
+
+    <!-- BESTSELLERY -->
+    <section class="py-16 bg-white">
+        <div class="px-6 md:px-20">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
+                <div>
+                    <span class="text-olive font-bold uppercase tracking-widest text-sm">To nejoblíbenější</span>
+                    <h2 class="text-4xl font-bold text-wood-dark">Bestsellery</h2>
+                </div>
+            </div>
+            <div id="bestseller-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- JS render -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- ZAKÁZKOVÁ TVORBA -->
+    <section class="py-20 bg-birch/30">
+        <div class="px-6 md:px-20 text-center mb-12">
+            <span class="text-olive font-bold uppercase tracking-widest text-sm">Na zakázku</span>
+            <h2 class="text-4xl font-bold text-wood-dark mt-2">Vaše nápady, moje realizace</h2>
+            <div class="w-20 h-1 bg-accent-beige mx-auto mt-4"></div>
+        </div>
+
+        <!-- Galerie zakázek -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 px-6 md:px-20 mb-16">
+            <!-- Tady můžeš mít statické fotky tvých nejlepších kusů -->
+            <div class="aspect-square rounded-2xl overflow-hidden shadow-md">
+                <img src="img_custom/zakazka/1.jpg" onerror="this.src='img_custom/notfound.jpg'" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            </div>
+            <div class="aspect-square rounded-2xl overflow-hidden shadow-md">
+                <img src="img_custom/zakazka/2.jpg" onerror="this.src='img_custom/notfound.jpg'" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            </div>
+            <div class="aspect-square rounded-2xl overflow-hidden shadow-md">
+                <img src="img_custom/zakazka/3.jpg" onerror="this.src='img_custom/notfound.jpg'" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            </div>
+            <div class="aspect-square rounded-2xl overflow-hidden shadow-md">
+                <img src="img_custom/zakazka/4.jpg" onerror="this.src='img_custom/notfound.jpg'" class="w-full h-full object-cover hover:scale-110 transition duration-500">
+            </div>
+        </div>
+        
+        <!-- Poptávkový formulář pro vlastní motiv -->
+        <div class="max-w-xl mx-auto px-6 mb-12 bg-white p-8 rounded-2xl shadow-sm border border-accent-beige">
+            <h3 class="text-xl font-bold text-wood-dark mb-4 text-center">Poptat vlastní motiv</h3>
+            <div class="space-y-4">
+                <input type="text" id="custom-name" placeholder="Vaše jméno" class="w-full p-3 border border-accent-beige rounded-lg focus:ring-2 ring-nature-green outline-none">
+                <input type="email" id="custom-email" placeholder="Váš e-mail" class="w-full p-3 border border-accent-beige rounded-lg focus:ring-2 ring-nature-green outline-none">
+                <textarea id="custom-note" placeholder="Popište vaši představu (co, na jaký materiál, rozměry...)" rows="4" class="w-full p-3 border border-accent-beige rounded-lg focus:ring-2 ring-nature-green outline-none"></textarea>
+                <button onclick="sendCustomInquiry()" class="w-full bg-wood-dark text-white py-3 rounded-lg font-bold hover:bg-chocolate transition shadow-md">
+                    Odeslat nezávaznou poptávku
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEKCE RECENZE -->
+    <section class="py-16 bg-birch/20 border-y border-accent-beige/30">
+        <div class="px-6 md:px-20">
+            <div class="text-center mb-12">
+                <span class="text-olive font-bold uppercase tracking-widest text-xs">Zkušenosti zákazníků</span>
+                <h2 class="text-3xl font-bold text-wood-dark mt-2">Dárky, které udělaly radost</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Recenze 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-accent-beige relative">
+                    <div class="text-nature-green text-4xl font-serif absolute top-4 left-6 opacity-20">“</div>
+                    <p class="text-coffee italic mb-6 relative z-10 text-sm leading-relaxed">
+                        „Chtěla jsem truhličku na obojky s mým psem na víku a moc se mi líbila.“
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-birch rounded-full flex items-center justify-center font-bold text-wood-dark text-xs">NG</div>
+                        <div>
+                            <p class="font-bold text-wood-dark text-sm">Nikola G.</p>
+                            <p class="text-[10px] uppercase tracking-wider text-olive">Truhla na obojky</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recenze 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-accent-beige relative">
+                    <div class="text-nature-green text-4xl font-serif absolute top-4 left-6 opacity-20">“</div>
+                    <p class="text-coffee italic mb-6 relative z-10 text-sm leading-relaxed">
+                        „Objednala jsem si truhličku-pokladničku a krabičku na kapesníky - skvělé zpracování a design podle mé představy.“
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-birch rounded-full flex items-center justify-center font-bold text-wood-dark text-xs">PH</div>
+                        <div>
+                            <p class="font-bold text-wood-dark text-sm">Petra H.</p>
+                            <p class="text-[10px] uppercase tracking-wider text-olive">Truhla a Krabička na kapesníky</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recenze 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-accent-beige relative">
+                    <div class="text-nature-green text-4xl font-serif absolute top-4 left-6 opacity-20">“</div>
+                    <p class="text-coffee italic mb-6 relative z-10 text-sm leading-relaxed">
+                        „Sháněli jsme dárky pro hosty na svatbu a všem se to moc líbilo. Domluva s Patrikem byla příjemná.“
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-birch rounded-full flex items-center justify-center font-bold text-wood-dark text-xs">MH</div>
+                        <div>
+                            <p class="font-bold text-wood-dark text-sm">Miroslava H.</p>
+                            <p class="text-[10px] uppercase tracking-wider text-olive">Sada podtácků a paňáků</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KATALOG -->
+    <main id="produkty" class="flex-1 px-6 md:px-16 py-16 bg-white">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 border-b border-gray-100 pb-8">
+            <h2 class="text-3xl font-bold text-wood-dark">Katalog produktů</h2>
+            <div id="category-buttons" class="flex gap-3 overflow-x-auto no-scrollbar w-full md:w-auto">
+                <!-- JS render kategorií -->
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 mb-6">
+            <select id="sort-select" onchange="setSort(this.value)" class="bg-white border border-accent-beige text-wood-dark text-sm rounded-lg p-2.5 outline-none focus:ring-2 ring-nature-green">
+                <option value="rank">Doporučené (naše nejoblíbenější)</option>
+                <option value="price-asc">Nejlevnější</option>
+                <option value="price-desc">Nejdražší</option>
+                <option value="newest">Nejnovější</option>
+            </select>
+        </div>
+
+            <!-- SEM VLOŽ HASHTAGY (Usage buttons) -->
+        <div id="usage-buttons" class="flex flex-wrap gap-2 mb-10 justify-center md:justify-start">
+            <!-- JS render hashtagů -->
+        </div>
+        
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- JS render produktů -->
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-wood-dark text-white py-16 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-accent-beige">Kontakt</h4>
+                <p class="opacity-80">Patrik Čákora</p>
+                <p class="opacity-80 text-sm">cacadarky@gmail.com</p>
+                <p class="opacity-80 text-sm">+420 776 744 284</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-accent-beige">Fakturační údaje</h4>
+                <p class="opacity-80 text-sm italic">IČO: 21699682</p>
+                <p class="opacity-80 text-sm">Jáchymovská 60, Karlovy Vary</p>
+                <p class="opacity-60 text-xs mt-2 italic">Nejsem plátce DPH.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg mb-4 text-accent-beige">Informace</h4>
+                <ul class="text-sm space-y-2">
+                    <li><a href="podminky.html" class="hover:text-accent-beige transition underline decoration-accent-beige/30">Obchodní podmínky</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: DETAIL PRODUKTU -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/80 hidden z-[60] flex items-center justify-center p-4 backdrop-blur-sm" onclick="closeDetail(event)">
+        <div class="bg-wood-light w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row relative" onclick="event.stopPropagation()">
+            <button onclick="closeDetail()" class="absolute top-4 right-4 z-10 bg-white/80 w-10 h-10 rounded-full flex items-center justify-center text-2xl font-bold hover:bg-white">&times;</button>
+            
+            <!-- Galerie v detailu -->
+            <div class="w-full md:w-1/2 bg-birch h-64 md:h-auto overflow-y-auto p-4 space-y-4 no-scrollbar" id="modal-gallery">
+                <!-- JS vygeneruje plné fotky -->
+            </div>
+
+            <!-- Info v detailu -->
+            <div class="w-full md:w-1/2 p-8 flex flex-col">
+                <span id="modal-cat" class="text-xs uppercase tracking-widest text-olive font-bold mb-2"></span>
+                <h2 id="modal-title" class="text-3xl font-bold text-wood-dark mb-4"></h2>
+                <div class="flex-1 overflow-y-auto mb-6">
+                    <p id="modal-description" class="text-coffee leading-relaxed"></p>
+                </div>
+                <div class="flex justify-between items-center pt-6 border-t border-accent-beige">
+                    <span id="modal-price" class="text-3xl font-bold text-nature-green"></span>
+                    <button id="modal-add-btn" class="bg-nature-green text-white px-8 py-3 rounded-xl font-bold hover:bg-olive transition">Přidat do košíku 🛒</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: KOŠÍK -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/60 hidden z-50 flex justify-end" onclick="toggleCart()">
+        <div class="bg-wood-light w-full max-w-md h-full shadow-2xl flex flex-col" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center p-6 border-b border-accent-beige bg-white">
+                <h2 class="text-2xl font-bold text-nature-green">Váš košík</h2>
+                <button onclick="toggleCart()" class="text-3xl text-gray-400 hover:text-black">&times;</button>
+            </div>
+            
+            <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+
+            <!-- Výběr dopravy -->
+            <div class="mt-6 space-y-3">
+                <h4 class="font-bold text-wood-dark text-sm uppercase tracking-wider">Způsob doručení</h4>
+                <div class="grid grid-cols-1 gap-2">
+                    <label class="flex items-center gap-3 p-3 border border-accent-beige rounded-xl cursor-pointer hover:bg-birch/30 transition">
+                        <input type="radio" name="shipping" value="Zásilkovna (89 Kč)" checked class="w-4 h-4 text-nature-green focus:ring-nature-green">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-bold">Zásilkovna</span>
+                            <span class="text-xs text-gray-500">Na výdejní místo (+89 Kč)</span>
+                        </div>
+                    </label>
+                    
+                    <label class="flex items-center gap-3 p-3 border border-accent-beige rounded-xl cursor-pointer hover:bg-birch/30 transition">
+                        <input type="radio" name="shipping" value="Osobní odběr (Karlovy Vary)" class="w-4 h-4 text-nature-green focus:ring-nature-green">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-bold">Osobní odběr</span>
+                            <span class="text-xs text-gray-500">Karlovy Vary (Zdarma)</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="p-6 bg-white border-t border-accent-beige space-y-4">
+                <input type="text" id="order-name" placeholder="Jméno a příjmení" class="w-full p-3 border border-accent-beige rounded-lg outline-none focus:ring-1 ring-nature-green">
+                <input type="email" id="order-email" placeholder="E-mail" class="w-full p-3 border border-accent-beige rounded-lg outline-none focus:ring-1 ring-nature-green">
+                <textarea id="order-note" placeholder="Poznámka k objednávce..." class="w-full p-3 border border-accent-beige rounded-lg outline-none focus:ring-1 ring-nature-green text-sm"></textarea>
+                
+                <div class="flex justify-between text-2xl font-bold py-2">
+                    <span>Celkem:</span>
+                    <span id="modal-total" class="text-nature-green">0 Kč</span>
+                </div>
+                <button onclick="sendOrder()" class="w-full bg-nature-green text-white py-4 rounded-xl text-lg font-bold hover:bg-green-900 transition">
+                    Odeslat nezávaznou poptávku
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let products = [];
+    let cart = JSON.parse(localStorage.getItem('caca_cart')) || [];
+    let currentCategory = 'Vše';
+    let currentUsage = 'all';
+    let currentSort = 'rank'; // Výchozí řazení
+
+    function getProductPath(code) {
+        if (!code) return 'img_custom';
+        const prefix = code.charAt(0).toUpperCase();
+        return `img/${prefix}/${code}`;
+    }
+
+    function setSort(val) {
+        currentSort = val;
+        renderProducts();
+    }
+
+    // 1. NAČTENÍ DAT
+    async function loadProducts() {
+        try {
+            const response = await fetch('products.json');
+            products = await response.json();
+            renderProducts();
+            renderBestsellers();
+            renderFilterButtons();
+            renderCart();
+        } catch (error) {
+            console.error("Chyba při načítání dat:", error);
+        }
+    }
+
+    // 2. RENDER KATALOGU (s Thumbs)
+    function renderProducts() {
+        const grid = document.getElementById('product-grid');
+        
+        // 1. FILTROVÁNÍ (stávající logika)
+        let filtered = products.filter(p => {
+            const matchCat = (currentCategory === 'Vše' || p.cat === currentCategory || (currentCategory === 'Outlet' && p.outlet === 'yes'));
+            const matchUsage = (currentUsage === 'all' || (p.usage && p.usage.includes(currentUsage)));
+            const matchEshop = p.eshop === 'yes';
+            if (currentCategory !== 'Outlet' && p.outlet === 'yes') return false; 
+            return matchCat && matchUsage && matchEshop;
+        });
+
+        // 2. ŘAZENÍ (Nová logika)
+        filtered.sort((a, b) => {
+            if (currentSort === 'rank') {
+                return (b.rank || 50) - (a.rank || 50); // Od nejvyšší priority
+            }
+            if (currentSort === 'price-asc') {
+                return a.price - b.price;
+            }
+            if (currentSort === 'price-desc') {
+                return b.price - a.price;
+            }
+            if (currentSort === 'newest') {
+                return b.id - a.id; // Předpokládáme, že vyšší ID = novější produkt
+            }
+            return 0;
+        });
+
+        // 3. RENDER (stávající mapování)
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="col-span-full py-20 text-center"><p class="text-2xl font-serif italic text-coffee">Na těchto kouscích zrovna pracuji...</p></div>`;
+            return;
+        }
+
+        grid.innerHTML = filtered.map(p => {
+            // 1. Logika štítku pro každý konkrétní produkt (p)
+            let badge = '';
+            if (p.type === 'unique') {
+                badge = '<span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-1 rounded-md font-bold border border-amber-200 uppercase tracking-wider shadow-sm text-center">Jediný kus</span>';
+            } else if (p.type === 'order') {
+                badge = '<span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-1 rounded-md font-bold border border-blue-100 uppercase tracking-wider shadow-sm text-center">Na přání</span>';
+            } else {
+                badge = '<span class="bg-green-50 text-green-700 text-[10px] px-2 py-1 rounded-md font-bold border border-green-100 uppercase tracking-wider shadow-sm text-center">Skladem</span>';
+            }
+
+            // 2. Samotné HTML karty
+            return `
+            <div onclick="openDetail('${p.id}')" class="group bg-white p-4 rounded-2xl border border-accent-beige hover:shadow-xl transition-all duration-300 cursor-pointer relative">
+                
+                <!-- ŠTÍTKY (badge se vloží sem) -->
+                <div class="absolute top-2 right-2 z-10 flex flex-col gap-1 items-end min-w-[80px]">
+                    ${badge}
+                    ${p.outlet === 'yes' ? '<span class="bg-chocolate text-white text-[10px] px-2 py-1 rounded-full shadow-sm uppercase font-bold tracking-wider">Outlet</span>' : ''}
+                </div>
+
+                <div class="aspect-square mb-4 bg-birch rounded-xl overflow-hidden relative">
+                    <img src="${getProductPath(p.code)}/thumbs/1.jpg" 
+                        onerror="this.src='img_custom/thumbs/notfound.jpg'" 
+                        class="w-full h-full object-cover group-hover:scale-105 transition duration-500" 
+                        loading="lazy" 
+                        alt="${p.alt || p.name}">
+                </div>
+
+                <h3 class="font-bold text-wood-dark text-lg">${p.name}</h3>
+
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-xl font-bold text-wood-dark">${Number(p.price).toLocaleString('cs-CZ')} Kč</span>
+                    <button onclick="event.stopPropagation(); addToCart('${p.id}')" class="bg-nature-green text-white px-4 py-2 rounded-lg hover:bg-olive transition">
+                        🛒
+                    </button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    // 3. RENDER BESTSELLERŮ
+    function renderBestsellers() {
+        const container = document.getElementById('bestseller-grid');
+        if (!container) return;
+        const top = products.filter(p => p.bestseller === 'yes').slice(0, 3);
+
+        container.innerHTML = top.map(p => `
+            <div onclick="openDetail('${p.id}')" class="bg-white p-5 rounded-2xl border border-accent-beige shadow-sm hover:shadow-lg transition cursor-pointer">
+                <div class="aspect-video mb-4 bg-birch rounded-xl overflow-hidden">
+                    <img src="${getProductPath(p.code)}/thumbs/1.jpg" onerror="this.src='img_custom/notfound.jpg'" class="w-full h-full object-cover" alt="${p.alt}">
+                </div>
+                <h3 class="font-bold text-wood-dark text-xl">${p.name}</h3>
+                <p class="text-nature-green font-bold text-lg mt-2">${Number(p.price).toLocaleString('cs-CZ')} Kč</p>
+            </div>
+        `).join('');
+    }
+
+    // 4. DETAIL PRODUKTU (FULL KVALITA FOTKY)
+    function openDetail(id) {
+        // Hledáme produkt defenzivně (převedeme na string obě strany)
+        const p = products.find(i => String(i.id) === String(id));
+        const addBtn = document.getElementById('modal-add-btn');
+
+        if (!p) return;
+
+        // 1. NAPLNĚNÍ TEXTŮ
+        document.getElementById('modal-title').innerText = p.name;
+        document.getElementById('modal-price').innerText = `${Number(p.price).toLocaleString('cs-CZ')} Kč`;
+
+        // PŘIDÁNÍ ROZMĚRŮ (vložíme je do popisu nebo vytvoř nový element v HTML)
+        const dimsHtml = p.dims ? `<p class="text-xs font-bold text-olive mb-4 uppercase tracking-widest">📐 Rozměry: ${p.dims}</p>` : '';
+        document.getElementById('modal-description').innerHTML = dimsHtml + (p.description || 'Na popisu pracujeme...');
+        
+        // 2. NASTAVENÍ TLAČÍTKA (Design + Akce)
+        // Důležité: Tady mu musíme říct, co má dělat, když se na něj klikne!
+        addBtn.onclick = () => { 
+            addToCart(p.id); 
+            closeDetail(); 
+        };
+
+        if (p.type === 'unique') {
+            addBtn.innerHTML = "Chci tento originál 🛒";
+            addBtn.className = "bg-amber-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-amber-700 transition shadow-lg";
+        } else if (p.type === 'order') {
+            addBtn.innerHTML = "Vyrobit na zakázku 🛒";
+            addBtn.className = "bg-nature-green text-white px-8 py-3 rounded-xl font-bold hover:bg-olive transition shadow-lg";
+        } else {
+            addBtn.innerHTML = "Přidat do košíku 🛒";
+            addBtn.className = "bg-nature-green text-white px-8 py-3 rounded-xl font-bold hover:bg-olive transition shadow-lg";
+        }
+
+        // 3. GALERIE
+        const gallery = document.getElementById('modal-gallery');
+        gallery.innerHTML = '';
+        
+        if (p.img_count > 0) {
+            let photosHtml = '';
+            for (let i = 1; i <= p.img_count; i++) {
+                photosHtml += `<img src="${getProductPath(p.code)}/${i}.jpg" class="w-full rounded-xl border border-accent-beige shadow-sm">`;
+            }
+            // Přidání indikátoru scrollu
+            gallery.innerHTML =  `
+                <div class="text-center py-4 text-xs font-bold text-olive uppercase tracking-widest animate-bounce">
+                    ⇣ Další fotky níže ⇣
+                </div>` + photosHtml ;
+        } else {
+            gallery.innerHTML = `<img src="img_custom/notfound.jpg" class="w-full rounded-xl opacity-50">`;
+        }
+
+        // 4. ZOBRAZENÍ MODALU
+        document.getElementById('detail-modal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetail(e) {
+        document.getElementById('detail-modal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // 5. FILTRY
+    function renderFilterButtons() {
+        const catContainer = document.getElementById('category-buttons');
+        const usageContainer = document.getElementById('usage-buttons'); // Musíš mít toto ID v HTML!
+
+        // Zjistíme, které kategorie mají reálně produkty (mimo outlet)
+        const activeCats = [...new Set(products.filter(p => p.eshop === 'yes' && p.outlet !== 'yes').map(p => p.cat))];
+        const catsToShow = ['Vše', ...activeCats];
+        
+        // Přidáme Outlet, pokud existuje aspoň jeden outletový produkt
+        if (products.some(p => p.outlet === 'yes')) catsToShow.push('Outlet');
+
+        catContainer.innerHTML = catsToShow.map(cat => `
+            <button onclick="setCategory('${cat}')" 
+                    class="px-6 py-2 rounded-full whitespace-nowrap border border-accent-beige transition-all
+                    ${currentCategory === cat ? 'bg-nature-green text-white' : 'bg-white text-wood-dark hover:bg-accent-beige'}">
+                ${cat}
+            </button>
+        `).join('');
+
+        // HASHTAGY (Usage)
+        let allUsages = products.flatMap(p => p.usage ? p.usage.split(',').map(s => s.trim()) : []);
+        const uniqueUsages = ['all', ...new Set(allUsages.filter(u => u !== "" && u !== "0"))];
+
+        if (usageContainer) {
+            usageContainer.innerHTML = uniqueUsages.map(u => `
+                <button onclick="setUsage('${u}')" 
+                        class="text-xs px-3 py-1 rounded-md transition-all italic
+                        ${currentUsage === u ? 'bg-nature-green text-white' : 'bg-birch text-wood-dark'}">
+                    #${u === 'all' ? 'vše' : u.toLowerCase()}
+                </button>
+            `).join('');
+        }
+    }
+
+
+    // --- FILTROVÁNÍ ---
+
+    function setCategory(cat) {
+        currentCategory = cat;
+        //currentUsage = 'all'; // Při změně hlavní kategorie resetujeme hashtag
+        renderProducts();
+        renderFilterButtons();
+    }
+
+    function setUsage(usage) {
+        currentUsage = usage;
+        renderProducts();
+        renderFilterButtons();
+    }
+
+    // 6. KOŠÍK LOGIKA
+    function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
+
+    function addToCart(id) {
+        // Hledáme ID jako string
+        const p = products.find(i => String(i.id) === String(id));
+        if (!p) return;
+
+        const exists = cart.find(item => String(item.id) === String(id));
+        if (exists) { 
+            exists.quantity++; 
+        } else { 
+            cart.push({ ...p, quantity: 1 }); 
+        }
+        saveCart();
+    }
+
+    function changeQuantity(id, delta) {
+        const item = cart.find(i => String(i.id) === String(id));
+        if (item) {
+            item.quantity += delta;
+            // OPRAVA: Ponecháme vše kromě smazaného ID
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => String(i.id) !== String(id));
+            }
+            saveCart();
+        }
+    }
+
+    function saveCart() {
+        localStorage.setItem('caca_cart', JSON.stringify(cart));
+        renderCart();
+    }
+
+
+    // 1. Přidej tuhle pomocnou funkci pro získání ceny dopravy
+    function getShippingCost() {
+        const selected = document.querySelector('input[name="shipping"]:checked');
+        if (!selected) return 0;
+        // Vytáhne číslo z textu "Zásilkovna (89 Kč)" -> 89
+        const priceMatch = selected.value.match(/\d+/);
+        return priceMatch ? parseInt(priceMatch[0]) : 0;
+    }
+
+    // Formátování ceny v košíku (renderCart)
+    function renderCart() {
+        const container = document.getElementById('cart-items');
+        const totalEl = document.getElementById('modal-total');
+        const countEl = document.getElementById('cart-count');
+        
+        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+        countEl.innerText = count;
+
+        if (cart.length === 0) {
+            container.innerHTML = '<p class="text-center text-gray-400 mt-10 italic">Košík zeje prázdnotou...</p>';
+            totalEl.innerText = '0 Kč';
+            return;
+        }
+
+        container.innerHTML = cart.map(item => `
+            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-accent-beige">
+                <div class="flex-1">
+                    <h4 class="font-bold text-sm text-wood-dark">${item.name}</h4>
+                    <p class="text-xs text-olive">${Number(item.price).toLocaleString('cs-CZ')} Kč/ks</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <!-- ID v uvozovkách '${item.id}' -->
+                    <button onclick="changeQuantity('${item.id}', -1)" class="w-8 h-8 rounded-full bg-birch font-bold hover:bg-accent-beige transition">-</button>
+                    <span class="font-bold">${item.quantity}</span>
+                    <button onclick="changeQuantity('${item.id}', 1)" class="w-8 h-8 rounded-full bg-birch font-bold hover:bg-accent-beige transition">+</button>
+                </div>
+            </div>
+        `).join('');
+
+        // VÝPOČET CELKOVÉ CENY VČETNĚ DOPRAVY
+        const productsTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const shippingTotal = getShippingCost();
+        const finalTotal = productsTotal + shippingTotal;
+
+        totalEl.innerText = `${finalTotal.toLocaleString('cs-CZ')} Kč`;
+    }
+
+    // 7. ODESÍLÁNÍ (EMAILJS)
+    function sendOrder() {
+        const name = document.getElementById('order-name').value;
+        const email = document.getElementById('order-email').value;
+        const note = document.getElementById('order-note').value;
+        
+        // Získání vybrané dopravy
+        const shipping = document.querySelector('input[name="shipping"]:checked').value;
+
+        if (!name || !email || cart.length === 0) {
+            alert("Prosím vyplňte kontaktní údaje.");
+            return;
+        }
+
+        const orderId = "Čača-" + Math.floor(1000 + Math.random() * 9000);
+        const itemsString = cart.map(i => `- [${i.code}] ${i.name} (${i.quantity}x) - ${Number(i.price * i.quantity).toLocaleString('cs-CZ')} Kč`).join('\n');
+        const total = document.getElementById('modal-total').innerText;
+
+        const params = {
+            order_id: orderId,
+            customer_name: name,
+            customer_email: email,
+            customer_note: note || "Bez poznámky",
+            order_details: itemsString,
+            shipping_method: shipping, // {{shipping_method}} v šabloně EmailJS
+            total_price: total
+        };
+
+        emailjs.send('service_1vl85qy', 'template_1odfmrd', params)
+            .then(() => {
+                alert(`Děkuji! Poptávka ${orderId} byla odeslána.`);
+                cart = [];
+                saveCart();
+                toggleCart();
+            });
+    }
+
+    function sendCustomInquiry() {
+        const name = document.getElementById('custom-name').value;
+        const email = document.getElementById('custom-email').value;
+        const note = document.getElementById('custom-note').value;
+
+        if (!name || !email || !note) {
+            alert("Prosím vyplň všechna pole.");
+            return;
+        }
+
+        // Tady si v EmailJS vytvoř druhou šablonu (pro vlastní motiv) 
+        // a parametry pojmenuj stejně jako v ní
+        const params = {
+            customer_name: name,
+            customer_email: email,
+            customer_note: note
+        };
+
+        emailjs.send('service_61tzwdi', 'template_90m9hf1', params)
+            .then(() => {
+                alert('Váš návrh byl odeslán!');
+                document.getElementById('custom-note').value = '';
+            });
+    }
+
+    // START
+    loadProducts();
+
+    // Reaguje na změnu dopravy a hned přepočítá cenu v košíku
+    document.addEventListener('change', (e) => {
+        if (e.target.name === 'shipping') {
+            renderCart();
+        }
+    });
+    
+</script>
+</body>
+</html>
