@@ -276,21 +276,29 @@
                 <!-- JS vygeneruje fotky -->
             </div>
 
-            <!-- Info: Na mobilu zbytek výšky, samostatně scrollovatelný -->
-            <div class="w-full h-[55vh] md:h-auto md:w-1/2 p-6 md:p-8 flex flex-col overflow-hidden">
-                <div class="flex-1 overflow-y-auto pr-2 scrollbar-thin">
-                    <span id="modal-cat" class="text-xs uppercase tracking-widest text-olive font-bold mb-2 block"></span>
-                    <h2 id="modal-title" class="text-2xl md:text-3xl font-bold text-wood-dark mb-4 leading-tight"></h2>
-                    
-                    <div id="modal-description" class="text-coffee leading-relaxed text-sm md:text-base">
-                        <!-- Popis -->
+            <!-- Info část: Na mobilu zabere zbytek místa, ale textu dáme mantinely -->
+            <div class="w-full h-[55vh] md:h-[70vh] md:w-1/2 p-5 md:p-8 flex flex-col bg-wood-light">
+                
+                <!-- Horní fixní část: Kategorie a Název -->
+                <div class="mb-2">
+                    <span id="modal-cat" class="text-[10px] uppercase tracking-widest text-olive font-bold block"></span>
+                    <h2 id="modal-title" class="text-xl md:text-3xl font-bold text-wood-dark leading-tight"></h2>
+                </div>
+
+                <!-- SCROLLOVACÍ BOX PRO POPIS: Tady omezíme prostor -->
+                <div class="flex-1 overflow-y-auto pr-2 scrollbar-thin border-t border-accent-beige/30 pt-4">
+                    <div id="modal-description" class="text-coffee leading-relaxed text-xs md:text-base">
+                        <!-- Popis se vloží sem přes JS -->
                     </div>
                 </div>
 
-                <!-- Fixní spodní lišta s cenou a tlačítkem -->
-                <div class="pt-4 border-t border-accent-beige mt-4 flex justify-between items-center bg-wood-light">
-                    <span id="modal-price" class="text-2xl font-bold text-nature-green"></span>
-                    <button id="modal-add-btn" class="bg-nature-green text-white px-6 py-3 rounded-xl font-bold hover:bg-olive transition text-sm md:text-base shadow-lg">
+                <!-- FIXNÍ SPODNÍ LIŠTA: Cena a tlačítko (vždy na očích) -->
+                <div class="pt-4 border-t border-accent-beige mt-auto flex justify-between items-center bg-wood-light">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] uppercase text-coffee/60 font-bold">Cena</span>
+                        <span id="modal-price" class="text-xl md:text-2xl font-bold text-nature-green"></span>
+                    </div>
+                    <button id="modal-add-btn" class="bg-nature-green text-white px-6 py-3 rounded-xl font-bold hover:bg-olive transition shadow-lg text-sm md:text-base">
                         Přidat 🛒
                     </button>
                 </div>
@@ -529,6 +537,9 @@
         // 4. ZOBRAZENÍ MODALU
         document.getElementById('detail-modal').classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        // Resetuje scroll u popisu na začátek při každém otevření
+        const descContainer = document.getElementById('modal-description').parentElement;
+        if (descContainer) descContainer.scrollTop = 0;
     }
 
     function closeDetail(e) {
