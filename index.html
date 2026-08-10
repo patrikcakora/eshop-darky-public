@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z02B25SZYT"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-Z02B25SZYT');
-    </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Čača Dárky | Osobní gravírované dárky</title>
+    <meta name="description" content="Ručně vyráběné gravírované dárky na míru – dřevěné truhličky, skleničky, podtácky a dekorace z dílny v Karlových Varech. Osobní věnování, originální design, poctivá řemeslná práce.">
+    <link rel="canonical" href="https://cacadarky.cz/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Čača Dárky | Osobní gravírované dárky">
+    <meta property="og:description" content="Ručně vyráběné gravírované dárky na míru – dřevěné truhličky, skleničky, podtácky a dekorace. Osobní věnování a originální design.">
+    <meta property="og:url" content="https://cacadarky.cz/">
+    <meta property="og:image" content="https://cacadarky.cz/img_custom/hero.jpg">
+    <meta property="og:locale" content="cs_CZ">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Čača Dárky | Osobní gravírované dárky">
+    <meta name="twitter:description" content="Ručně vyráběné gravírované dárky na míru z dílny v Karlových Varech.">
+    <meta name="twitter:image" content="https://cacadarky.cz/img_custom/hero.jpg">
+
+    <!-- Google Consent Mode v2: dokud návštěvník cookies neodsouhlasí, GA neukládá žádná identifikátory -->
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied'
+    });
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z02B25SZYT"></script>
+    <script>
+    gtag('js', new Date());
+    gtag('config', 'G-Z02B25SZYT');
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -58,6 +80,20 @@
     <link rel="icon" type="image/svg+xml" href="img_custom/icon.svg">
 </head>
 <body class="flex flex-col min-h-screen">
+
+    <!-- COOKIE LIŠTA -->
+    <div id="cookie-banner" class="hidden fixed bottom-0 inset-x-0 z-[100] bg-wood-dark text-birch p-4 md:p-5 shadow-2xl">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-4">
+            <p class="text-sm flex-1 text-center md:text-left">
+                Tento web používá Google Analytics k měření návštěvnosti. Data se ukládají pouze s vaším souhlasem.
+                Více v <a href="podminky.html#gdpr" class="underline decoration-accent-beige/50 hover:text-accent-beige">Ochraně osobních údajů</a>.
+            </p>
+            <div class="flex gap-3 shrink-0">
+                <button onclick="rejectCookies()" class="px-4 py-2 rounded-lg text-sm font-semibold border border-birch/40 hover:bg-birch/10 transition">Odmítnout</button>
+                <button onclick="acceptCookies()" class="px-4 py-2 rounded-lg text-sm font-semibold bg-nature-green hover:bg-olive transition">Přijmout</button>
+            </div>
+        </div>
+    </div>
 
     <!-- HLAVIČKA -->
     <header class="glass-header sticky top-0 w-full py-3 px-6 flex justify-between items-center shadow-sm">
@@ -260,6 +296,7 @@
                 <h4 class="font-bold text-lg mb-4 text-accent-beige">Informace</h4>
                 <ul class="text-sm space-y-2">
                     <li><a href="podminky.html" class="hover:text-accent-beige transition underline decoration-accent-beige/30">Obchodní podmínky</a></li>
+                    <li><button onclick="openCookieSettings()" class="hover:text-accent-beige transition underline decoration-accent-beige/30 text-left">Cookie nastavení</button></li>
                 </ul>
             </div>
         </div>
@@ -731,7 +768,49 @@
             });
     }
 
+    // COOKIE CONSENT (Google Consent Mode v2)
+    function acceptCookies() {
+        gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+        localStorage.setItem('caca_cookie_consent', 'granted');
+        document.getElementById('cookie-banner').classList.add('hidden');
+    }
+
+    function rejectCookies() {
+        gtag('consent', 'update', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+        });
+        localStorage.setItem('caca_cookie_consent', 'denied');
+        document.getElementById('cookie-banner').classList.add('hidden');
+    }
+
+    function openCookieSettings() {
+        document.getElementById('cookie-banner').classList.remove('hidden');
+    }
+
+    function initCookieConsent() {
+        const consent = localStorage.getItem('caca_cookie_consent');
+        if (consent === 'granted') {
+            gtag('consent', 'update', {
+                'ad_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted',
+                'analytics_storage': 'granted'
+            });
+        } else if (consent !== 'denied') {
+            document.getElementById('cookie-banner').classList.remove('hidden');
+        }
+    }
+
     // START
+    initCookieConsent();
     loadProducts();
 
     // Reaguje na změnu dopravy a hned přepočítá cenu v košíku

@@ -4,6 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Podmínky, Doprava a Platba | Čača Dárky</title>
+    <meta name="description" content="Obchodní podmínky, doprava, platba a ochrana osobních údajů (GDPR) e-shopu Čača Dárky – ručně vyráběné gravírované dárky na míru.">
+    <link rel="canonical" href="https://cacadarky.cz/podminky.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Podmínky, Doprava a Platba | Čača Dárky">
+    <meta property="og:description" content="Obchodní podmínky, doprava, platba a ochrana osobních údajů (GDPR) e-shopu Čača Dárky.">
+    <meta property="og:url" content="https://cacadarky.cz/podminky.html">
+    <meta name="robots" content="noindex, follow">
+
+    <!-- Google Consent Mode v2: dokud návštěvník cookies neodsouhlasí, GA neukládá žádné identifikátory -->
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied'
+    });
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z02B25SZYT"></script>
+    <script>
+    gtag('js', new Date());
+    gtag('config', 'G-Z02B25SZYT');
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
@@ -12,7 +39,21 @@
     </style>
 </head>
 <body class="bg-[#fdfbf7] text-[#3d2b1f] p-6 md:p-10 max-w-3xl mx-auto leading-relaxed">
-    
+
+    <!-- COOKIE LIŠTA -->
+    <div id="cookie-banner" class="hidden fixed bottom-0 inset-x-0 z-[100] bg-[#3d2b1f] text-[#f5e9da] p-4 md:p-5 shadow-2xl">
+        <div class="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-4">
+            <p class="text-sm flex-1 text-center md:text-left">
+                Tento web používá Google Analytics k měření návštěvnosti. Data se ukládají pouze s vaším souhlasem.
+                Více v sekci <a href="#gdpr" class="underline hover:text-white">Ochrana osobních údajů</a>.
+            </p>
+            <div class="flex gap-3 shrink-0">
+                <button onclick="rejectCookies()" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/40 hover:bg-white/10 transition">Odmítnout</button>
+                <button onclick="acceptCookies()" class="px-4 py-2 rounded-lg text-sm font-semibold bg-[#2d4c3b] hover:opacity-90 transition">Přijmout</button>
+            </div>
+        </div>
+    </div>
+
     <nav class="mb-10 flex flex-wrap gap-4 text-sm font-bold text-[#2d4c3b] sticky top-0 bg-[#fdfbf7]/90 backdrop-blur py-2 z-10 border-b border-stone-200">
         <a href="index.html" class="hover:underline">&larr; Zpět na web</a>
         <a href="#jak-objednat" class="hover:underline">Jak objednat</a>
@@ -106,11 +147,59 @@
         <p class="mb-4 text-sm opacity-90">
             Odesláním nezávazné poptávky mi poskytujete své údaje (jméno, adresu, e-mail) za účelem vyřízení poptávky a posléze objednávky a vystavení faktury. Tato data nikde neprodávám a nepoužívám k marketingu bez vašeho souhlasu. Vaše data předávám pouze dopravní společnosti pro účely doručení balíčku.
         </p>
-        
+        <p class="mb-4 text-sm opacity-90">
+            Web dále používá <strong>Google Analytics</strong> k anonymnímu měření návštěvnosti (odkud lidé přicházejí, které stránky si prohlížejí). Tyto nástroje ukládají do vašeho prohlížeče cookies, a to pouze pokud s tím na úvodní liště souhlasíte – souhlas můžete kdykoliv odvolat či znovu upravit tlačítkem "Cookie nastavení" v patičce webu. Google zpracovává data v souladu s vlastními zásadami ochrany soukromí.
+        </p>
+
         <footer class="mt-16 pt-8 border-t border-stone-200 text-sm opacity-60 text-center">
             <strong>Provozovatel:</strong> Patrik Čákora | <strong>IČO:</strong> 21699682 <br>
-            <strong>Sídlo:</strong> Jáchymovská 60, Karlovy Vary, 36004 | Neplátce DPH.
+            <strong>Sídlo:</strong> Jáchymovská 60, Karlovy Vary, 36004 | Neplátce DPH. <br>
+            <button onclick="openCookieSettings()" class="underline hover:text-[#2d4c3b] mt-2 inline-block">Cookie nastavení</button>
         </footer>
+
+    <script>
+    function acceptCookies() {
+        gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+        localStorage.setItem('caca_cookie_consent', 'granted');
+        document.getElementById('cookie-banner').classList.add('hidden');
+    }
+
+    function rejectCookies() {
+        gtag('consent', 'update', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+        });
+        localStorage.setItem('caca_cookie_consent', 'denied');
+        document.getElementById('cookie-banner').classList.add('hidden');
+    }
+
+    function openCookieSettings() {
+        document.getElementById('cookie-banner').classList.remove('hidden');
+    }
+
+    (function initCookieConsent() {
+        const consent = localStorage.getItem('caca_cookie_consent');
+        if (consent === 'granted') {
+            gtag('consent', 'update', {
+                'ad_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted',
+                'analytics_storage': 'granted'
+            });
+        } else if (consent !== 'denied') {
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('cookie-banner').classList.remove('hidden');
+            });
+        }
+    })();
+    </script>
     </section>
 
 </body>
