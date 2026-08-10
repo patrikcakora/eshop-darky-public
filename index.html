@@ -182,6 +182,7 @@
         <div class="max-w-xl mx-auto px-6 mb-12 bg-white p-8 rounded-2xl shadow-sm border border-accent-beige">
             <h3 class="text-xl font-bold text-wood-dark mb-4 text-center">Poptat vlastní motiv</h3>
             <div class="space-y-4">
+                <input type="text" id="custom-website" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
                 <input type="text" id="custom-name" placeholder="Vaše jméno" class="w-full p-3 border border-accent-beige rounded-lg focus:ring-2 ring-nature-green outline-none">
                 <input type="email" id="custom-email" placeholder="Váš e-mail" class="w-full p-3 border border-accent-beige rounded-lg focus:ring-2 ring-nature-green outline-none">
                 <textarea id="custom-note" placeholder="Popište vaši představu (co, na jaký materiál, rozměry...)" rows="4" class="w-full p-3 border border-accent-beige rounded-lg focus:ring-2 ring-nature-green outline-none"></textarea>
@@ -368,6 +369,7 @@
             </div>
 
             <div class="p-6 bg-white border-t border-accent-beige space-y-4">
+                <input type="text" id="order-website" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
                 <input type="text" id="order-name" placeholder="Jméno a příjmení" class="w-full p-3 border border-accent-beige rounded-lg outline-none focus:ring-1 ring-nature-green">
                 <input type="email" id="order-email" placeholder="E-mail" class="w-full p-3 border border-accent-beige rounded-lg outline-none focus:ring-1 ring-nature-green">
                 <textarea id="order-note" placeholder="Poznámka k objednávce..." class="w-full p-3 border border-accent-beige rounded-lg outline-none focus:ring-1 ring-nature-green text-sm"></textarea>
@@ -517,6 +519,12 @@
 
         if (!p) return;
 
+        gtag('event', 'view_item', {
+            currency: 'CZK',
+            value: Number(p.price),
+            items: [{ item_id: p.code, item_name: p.name, item_category: p.cat, price: Number(p.price), quantity: 1 }]
+        });
+
         // 1. NAPLNĚNÍ TEXTŮ
         document.getElementById('modal-title').innerText = p.name;
         document.getElementById('modal-price').innerText = `${Number(p.price).toLocaleString('cs-CZ')} Kč`;
@@ -625,7 +633,17 @@
     }
 
     // 6. KOŠÍK LOGIKA
-    function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
+    function toggleCart() {
+        const modal = document.getElementById('cart-modal');
+        modal.classList.toggle('hidden');
+        if (!modal.classList.contains('hidden') && cart.length > 0) {
+            gtag('event', 'begin_checkout', {
+                currency: 'CZK',
+                value: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                items: cart.map(item => ({ item_id: item.code, item_name: item.name, item_category: item.cat, price: Number(item.price), quantity: item.quantity }))
+            });
+        }
+    }
 
     function addToCart(id) {
         // Hledáme ID jako string
@@ -633,12 +651,18 @@
         if (!p) return;
 
         const exists = cart.find(item => String(item.id) === String(id));
-        if (exists) { 
-            exists.quantity++; 
-        } else { 
-            cart.push({ ...p, quantity: 1 }); 
+        if (exists) {
+            exists.quantity++;
+        } else {
+            cart.push({ ...p, quantity: 1 });
         }
         saveCart();
+
+        gtag('event', 'add_to_cart', {
+            currency: 'CZK',
+            value: Number(p.price),
+            items: [{ item_id: p.code, item_name: p.name, item_category: p.cat, price: Number(p.price), quantity: 1 }]
+        });
     }
 
     function changeQuantity(id, delta) {
@@ -708,10 +732,13 @@
 
     // 7. ODESÍLÁNÍ (EMAILJS)
     function sendOrder() {
+        // Honeypot: neviditelné pole pro lidi, boti ho běžně vyplní
+        if (document.getElementById('order-website').value) return;
+
         const name = document.getElementById('order-name').value;
         const email = document.getElementById('order-email').value;
         const note = document.getElementById('order-note').value;
-        
+
         // Získání vybrané dopravy
         const shipping = document.querySelector('input[name="shipping"]:checked').value;
 
@@ -723,6 +750,7 @@
         const orderId = "Čača-" + Math.floor(1000 + Math.random() * 9000);
         const itemsString = cart.map(i => `- [${i.code}] ${i.name} (${i.quantity}x) - ${Number(i.price * i.quantity).toLocaleString('cs-CZ')} Kč`).join('\n');
         const total = document.getElementById('modal-total').innerText;
+        const totalValue = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + getShippingCost();
 
         const params = {
             order_id: orderId,
@@ -736,14 +764,26 @@
 
         emailjs.send('service_1vl85qy', 'template_1odfmrd', params)
             .then(() => {
+                gtag('event', 'generate_lead', {
+                    currency: 'CZK',
+                    value: totalValue,
+                    items: cart.map(item => ({ item_id: item.code, item_name: item.name, item_category: item.cat, price: Number(item.price), quantity: item.quantity }))
+                });
                 alert(`Děkuji! Poptávka ${orderId} byla odeslána.`);
                 cart = [];
                 saveCart();
                 toggleCart();
+            })
+            .catch((err) => {
+                console.error('EmailJS chyba (objednávka):', err);
+                alert('Poptávku se nepodařilo odeslat. Zkuste to prosím znovu, nebo mě kontaktujte přímo na cacadarky@gmail.com.');
             });
     }
 
     function sendCustomInquiry() {
+        // Honeypot: neviditelné pole pro lidi, boti ho běžně vyplní
+        if (document.getElementById('custom-website').value) return;
+
         const name = document.getElementById('custom-name').value;
         const email = document.getElementById('custom-email').value;
         const note = document.getElementById('custom-note').value;
@@ -753,7 +793,7 @@
             return;
         }
 
-        // Tady si v EmailJS vytvoř druhou šablonu (pro vlastní motiv) 
+        // Tady si v EmailJS vytvoř druhou šablonu (pro vlastní motiv)
         // a parametry pojmenuj stejně jako v ní
         const params = {
             customer_name: name,
@@ -763,8 +803,17 @@
 
         emailjs.send('service_61tzwdi', 'template_90m9hf1', params)
             .then(() => {
+                gtag('event', 'generate_lead', {
+                    currency: 'CZK',
+                    value: 0,
+                    lead_type: 'custom_design_inquiry'
+                });
                 alert('Váš návrh byl odeslán!');
                 document.getElementById('custom-note').value = '';
+            })
+            .catch((err) => {
+                console.error('EmailJS chyba (vlastní návrh):', err);
+                alert('Návrh se nepodařilo odeslat. Zkuste to prosím znovu, nebo mě kontaktujte přímo na cacadarky@gmail.com.');
             });
     }
 
