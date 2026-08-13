@@ -64,6 +64,10 @@
     (function(){
         emailjs.init("-XZkvxZdH6gL4Qzl9"); // ID z EmailJS
     })();
+    // Vlastní e-mail - pro interní notifikaci s odkazem na fakturu (viz sendOrder() níže).
+    // Používá se stejná šablona jako pro zákazníka (template_1odfmrd), jen se pošle znovu
+    // s "To Email" nastaveným na tuhle adresu a vyplněným {{invoice_action_block}}.
+    const OWNER_EMAIL = 'cacadarky@gmail.com';
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
@@ -759,7 +763,9 @@
             customer_note: note || "Bez poznámky",
             order_details: itemsString,
             shipping_method: shipping, // {{shipping_method}} v šabloně EmailJS
-            total_price: total
+            total_price: total,
+            subject_tag: '', // {{subject_tag}} v předmětu - u zákazníka prázdné
+            invoice_action_block: '' // {{invoice_action_block}} v těle - u zákazníka prázdné/neviditelné
         };
 
         emailjs.send('service_1vl85qy', 'template_1odfmrd', params)
@@ -770,6 +776,33 @@
                     items: cart.map(item => ({ item_id: item.code, item_name: item.name, item_category: item.cat, price: Number(item.price), quantity: item.quantity }))
                 });
                 alert(`Děkuji! Poptávka ${orderId} byla odeslána.`);
+
+                // Druhý e-mail, STEJNÁ šablona jako výše, ale adresovaný na OWNER_EMAIL a s
+                // vyplněným tlačítkem na předvyplněnou fakturu (faktura.html). BCC nastavené
+                // přímo v EmailJS šabloně zůstává jako záložní kopie, kdyby tenhle druhý e-mail
+                // z nějakého důvodu neprošel - jeho selhání se zákazníkovi nijak neukazuje.
+                const invoiceLink = 'https://cacadarky.cz/faktura.html?' + new URLSearchParams({
+                    order_id: orderId,
+                    customer_name: name,
+                    customer_email: email,
+                    customer_note: note || '',
+                    order_details: itemsString,
+                    shipping_method: shipping,
+                    total_price: totalValue
+                }).toString();
+
+                const invoiceActionBlock = `<div style="background:#f5e9da; border:2px dashed #2d4c3b; border-radius:10px; padding:16px; margin:20px 0; text-align:center;">`
+                    + `<p style="margin:0 0 10px 0; font-weight:bold; color:#2d4c3b;">🧾 Interní - jen pro tebe</p>`
+                    + `<a href="${invoiceLink}" style="display:inline-block; background:#2d4c3b; color:#ffffff; text-decoration:none; padding:10px 20px; border-radius:8px; font-weight:bold;">Vygenerovat fakturu</a>`
+                    + `</div>`;
+
+                emailjs.send('service_1vl85qy', 'template_1odfmrd', {
+                    ...params,
+                    customer_email: OWNER_EMAIL,
+                    subject_tag: '🧾 ',
+                    invoice_action_block: invoiceActionBlock
+                }).catch((err) => console.error('EmailJS chyba (interní e-mail s odkazem na fakturu):', err));
+
                 cart = [];
                 saveCart();
                 toggleCart();

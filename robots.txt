@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /faktura.html
 
 Sitemap: https://cacadarky.cz/sitemap.xml
