@@ -796,12 +796,16 @@
                     + `<a href="${invoiceLink}" style="display:inline-block; background:#2d4c3b; color:#ffffff; text-decoration:none; padding:10px 20px; border-radius:8px; font-weight:bold;">Vygenerovat fakturu</a>`
                     + `</div>`;
 
-                emailjs.send('service_1vl85qy', 'template_1odfmrd', {
-                    ...params,
-                    customer_email: OWNER_EMAIL,
-                    subject_tag: '🧾 ',
-                    invoice_action_block: invoiceActionBlock
-                }).catch((err) => console.error('EmailJS chyba (interní e-mail s odkazem na fakturu):', err));
+                // Malá prodleva mezi oběma e-maily - některá rozšíření prohlížeče (adblock/privacy)
+                // umí těsně po sobě jdoucí požadavky na stejnou URL tiše zahodit jako "duplicitní".
+                setTimeout(() => {
+                    emailjs.send('service_1vl85qy', 'template_1odfmrd', {
+                        ...params,
+                        customer_email: OWNER_EMAIL,
+                        subject_tag: '🧾 ',
+                        invoice_action_block: invoiceActionBlock
+                    }).catch((err) => console.error('EmailJS chyba (interní e-mail s odkazem na fakturu):', err));
+                }, 1500);
 
                 cart = [];
                 saveCart();
